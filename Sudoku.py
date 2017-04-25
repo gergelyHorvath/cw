@@ -1,7 +1,9 @@
 import copy
 
 
-def solve(board, d=1):
+def sudoku_solver(board, d=1):
+    print(board)
+    print(d)
     inf = most_information(board)
     if not inf:
         return board
@@ -12,7 +14,7 @@ def solve(board, d=1):
         for v in inf[idx][2]:
             new_board = copy.deepcopy(board)
             new_board[r][c] = v
-            result = solve(new_board, d+1)
+            result = sudoku_solver(new_board, d+1)
             if result:
                 return result
 
@@ -33,9 +35,11 @@ def most_information(board):
                 data = [r, c, valid_nums(board, r, c)]
                 if len(data[2]) == 0:
                     return 'STOP'
+                if len(data[2]) == 1:
+                    return [data]
                 inf.append(data)
     inf = sorted(inf, key=lambda x: len(x[2]))
-    return inf
+    return inf[0]
 
 
 def valid_nums(board, r, c):
@@ -48,21 +52,13 @@ def valid_nums(board, r, c):
 
 
 
-puzzle = [[5,3,0,0,7,0,0,0,0],
-          [6,0,0,1,9,5,0,0,0],
-          [0,9,8,0,0,0,0,6,0],
-          [8,0,0,0,6,0,0,0,3],
-          [4,0,0,8,0,3,0,0,1],
-          [7,0,0,0,2,0,0,0,6],
-          [0,6,0,0,0,0,2,8,0],
-          [0,0,0,4,1,9,0,0,5],
-          [0,0,0,0,8,0,0,7,9]]
+puzzle = [[0, 0, 6, 1, 0, 0, 0, 0, 8], [0, 8, 0, 0, 9, 0, 0, 3, 0], [2, 0, 0, 0, 0, 5, 4, 0, 0], [4, 0, 0, 0, 0, 1, 8, 0, 0], [0, 3, 0, 0, 7, 0, 0, 4, 0], [0, 0, 7, 9, 0, 0, 0, 0, 3], [0, 0, 8, 4, 0, 0, 0, 0, 6], [0, 2, 0, 0, 5, 0, 0, 8, 0], [1, 0, 0, 0, 0, 2, 5, 0, 0]]
 
 
 #print(most_information(puzzle))
 #print(list_gen(puzzle, 5, 5))
 #print(valid_nums(puzzle, 5, 3))
 
-print(solve(puzzle))
+print(sudoku_solver(puzzle))
     
 
