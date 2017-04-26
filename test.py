@@ -1,3 +1,4 @@
-a = 4 * 104104
 
-print(a)
+_list = [1, 2, 3, 4, 5]
+_list
+print(_list)
